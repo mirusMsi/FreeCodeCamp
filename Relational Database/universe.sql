@@ -159,7 +159,8 @@ CREATE TABLE public.galaxy (
     name character varying NOT NULL,
     radius_in_kly integer,
     distance_in_kly numeric(12,2),
-    constellation_id integer
+    constellation_id integer,
+    stars_in_g integer
 );
 
 
@@ -379,13 +380,13 @@ INSERT INTO public.constellation VALUES (7, 'Viro', NULL);
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.galaxy VALUES (1, 'Milky Way', 185, NULL, 1);
-INSERT INTO public.galaxy VALUES (2, 'Andromeda', 220, 2.45, 2);
-INSERT INTO public.galaxy VALUES (3, 'UGC 2885', 463, 232.00, 3);
-INSERT INTO public.galaxy VALUES (4, 'NGC 6872', 522, 212.00, 4);
-INSERT INTO public.galaxy VALUES (5, 'Comet', 600, 3200000.00, 5);
-INSERT INTO public.galaxy VALUES (6, 'NGC 4874', 1000, 3600000.00, 6);
-INSERT INTO public.galaxy VALUES (7, 'IC 1101', 210, 1000000.00, 7);
+INSERT INTO public.galaxy VALUES (3, 'UGC 2885', 463, 232.00, 3, NULL);
+INSERT INTO public.galaxy VALUES (4, 'NGC 6872', 522, 212.00, 4, NULL);
+INSERT INTO public.galaxy VALUES (5, 'Comet', 600, 3200000.00, 5, NULL);
+INSERT INTO public.galaxy VALUES (6, 'NGC 4874', 1000, 3600000.00, 6, NULL);
+INSERT INTO public.galaxy VALUES (7, 'IC 1101', 210, 1000000.00, 7, 100000);
+INSERT INTO public.galaxy VALUES (2, 'Andromeda', 220, 2.45, 2, 1000);
+INSERT INTO public.galaxy VALUES (1, 'Milky Way', 185, NULL, 1, 400);
 
 
 --
@@ -404,6 +405,13 @@ INSERT INTO public.galaxy VALUES (7, 'IC 1101', 210, 1000000.00, 7);
 -- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.star VALUES (1, 'Sirius', 2, 2.1, 1.7);
+INSERT INTO public.star VALUES (2, 'Pollux', 3, 1.9, 9.1);
+INSERT INTO public.star VALUES (3, 'Arcturus', 4, 1.1, 25.4);
+INSERT INTO public.star VALUES (4, 'Aldebaran', 5, 1.2, 45.1);
+INSERT INTO public.star VALUES (5, 'Rigel', 6, 21.0, 78.9);
+INSERT INTO public.star VALUES (6, 'Antares', 7, 14.3, 680.0);
+INSERT INTO public.star VALUES (7, 'Sun', 1, 1.0, 1.0);
 
 
 --
@@ -452,7 +460,7 @@ SELECT pg_catalog.setval('public.planet_palnet_id_seq', 1, false);
 -- Name: star_star_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.star_star_id_seq', 1, false);
+SELECT pg_catalog.setval('public.star_star_id_seq', 7, true);
 
 
 --
