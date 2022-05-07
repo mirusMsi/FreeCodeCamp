@@ -44,12 +44,85 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: atmosphere; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.atmosphere (
+    atmosphere_id integer NOT NULL,
+    planet_id integer NOT NULL,
+    component_id integer NOT NULL,
+    value numeric(2,1) NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE public.atmosphere OWNER TO freecodecamp;
+
+--
+-- Name: atmosphere_atmosphere_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.atmosphere_atmosphere_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.atmosphere_atmosphere_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: atmosphere_atmosphere_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.atmosphere_atmosphere_id_seq OWNED BY public.atmosphere.atmosphere_id;
+
+
+--
+-- Name: component; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.component (
+    component_id integer NOT NULL,
+    name character varying NOT NULL,
+    shortname character varying(12) NOT NULL
+);
+
+
+ALTER TABLE public.component OWNER TO freecodecamp;
+
+--
+-- Name: components_component_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.components_component_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.components_component_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: components_component_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.components_component_id_seq OWNED BY public.component.component_id;
+
+
+--
 -- Name: galaxy; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    radius_in_kly integer
 );
 
 
@@ -183,6 +256,20 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 
 
 --
+-- Name: atmosphere atmosphere_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.atmosphere ALTER COLUMN atmosphere_id SET DEFAULT nextval('public.atmosphere_atmosphere_id_seq'::regclass);
+
+
+--
+-- Name: component component_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.component ALTER COLUMN component_id SET DEFAULT nextval('public.components_component_id_seq'::regclass);
+
+
+--
 -- Name: galaxy galaxy_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
@@ -211,6 +298,18 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
+-- Data for Name: atmosphere; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+
+
+--
+-- Data for Name: component; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+
+
+--
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
@@ -232,6 +331,20 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 -- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+
+
+--
+-- Name: atmosphere_atmosphere_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.atmosphere_atmosphere_id_seq', 1, false);
+
+
+--
+-- Name: components_component_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.components_component_id_seq', 1, false);
 
 
 --
@@ -260,6 +373,46 @@ SELECT pg_catalog.setval('public.planet_palnet_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.star_star_id_seq', 1, false);
+
+
+--
+-- Name: atmosphere atmosphere_foreign_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.atmosphere
+    ADD CONSTRAINT atmosphere_foreign_key UNIQUE (planet_id, component_id);
+
+
+--
+-- Name: atmosphere atmosphere_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.atmosphere
+    ADD CONSTRAINT atmosphere_pkey PRIMARY KEY (atmosphere_id);
+
+
+--
+-- Name: component components_fullname_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.component
+    ADD CONSTRAINT components_fullname_key UNIQUE (name);
+
+
+--
+-- Name: component components_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.component
+    ADD CONSTRAINT components_pkey PRIMARY KEY (component_id);
+
+
+--
+-- Name: component components_shortname_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.component
+    ADD CONSTRAINT components_shortname_key UNIQUE (shortname);
 
 
 --
@@ -324,6 +477,22 @@ ALTER TABLE ONLY public.star
 
 ALTER TABLE ONLY public.star
     ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
+
+
+--
+-- Name: atmosphere atmosphere_component_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.atmosphere
+    ADD CONSTRAINT atmosphere_component_id_fkey FOREIGN KEY (component_id) REFERENCES public.component(component_id);
+
+
+--
+-- Name: atmosphere atmosphere_planet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.atmosphere
+    ADD CONSTRAINT atmosphere_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
 
 
 --
