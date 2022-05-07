@@ -194,7 +194,10 @@ ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 CREATE TABLE public.moon (
     moon_id integer NOT NULL,
     name character varying NOT NULL,
-    planet_id integer NOT NULL
+    planet_id integer NOT NULL,
+    distance_to_planet numeric(4,1),
+    weight_in_m numeric(4,1),
+    radius_in_r numeric(4,1)
 );
 
 
@@ -229,7 +232,11 @@ ALTER SEQUENCE public.moon_moon_id_seq OWNED BY public.moon.moon_id;
 CREATE TABLE public.planet (
     planet_id integer NOT NULL,
     name character varying NOT NULL,
-    star_id integer NOT NULL
+    star_id integer NOT NULL,
+    weight_in_m numeric(4,1),
+    radius_in_r numeric(4,1),
+    rings_is boolean NOT NULL,
+    magnetosphere_id boolean NOT NULL
 );
 
 
@@ -264,7 +271,9 @@ ALTER SEQUENCE public.planet_palnet_id_seq OWNED BY public.planet.planet_id;
 CREATE TABLE public.star (
     star_id integer NOT NULL,
     name character varying NOT NULL,
-    galaxy_id integer NOT NULL
+    galaxy_id integer NOT NULL,
+    weight_in_m numeric(4,1),
+    radius_in_r numeric(4,1)
 );
 
 
