@@ -81,17 +81,17 @@ ALTER SEQUENCE public.atmosphere_atmosphere_id_seq OWNED BY public.atmosphere.at
 
 
 --
--- Name: cluster; Type: TABLE; Schema: public; Owner: freecodecamp
+-- Name: constellation; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
-CREATE TABLE public.cluster (
-    cluster_id integer NOT NULL,
+CREATE TABLE public.constellation (
+    constellation_id integer NOT NULL,
     name character varying NOT NULL,
     comment text
 );
 
 
-ALTER TABLE public.cluster OWNER TO freecodecamp;
+ALTER TABLE public.constellation OWNER TO freecodecamp;
 
 --
 -- Name: cluster_cluster_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
@@ -112,7 +112,7 @@ ALTER TABLE public.cluster_cluster_id_seq OWNER TO freecodecamp;
 -- Name: cluster_cluster_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.cluster_cluster_id_seq OWNED BY public.cluster.cluster_id;
+ALTER SEQUENCE public.cluster_cluster_id_seq OWNED BY public.constellation.constellation_id;
 
 
 --
@@ -158,8 +158,8 @@ CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
     name character varying NOT NULL,
     radius_in_kly integer,
-    distance_in_kly integer,
-    cluster_id integer
+    distance_in_kly numeric(12,2),
+    constellation_id integer
 );
 
 
@@ -309,17 +309,17 @@ ALTER TABLE ONLY public.atmosphere ALTER COLUMN atmosphere_id SET DEFAULT nextva
 
 
 --
--- Name: cluster cluster_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.cluster ALTER COLUMN cluster_id SET DEFAULT nextval('public.cluster_cluster_id_seq'::regclass);
-
-
---
 -- Name: component component_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.component ALTER COLUMN component_id SET DEFAULT nextval('public.components_component_id_seq'::regclass);
+
+
+--
+-- Name: constellation constellation_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.constellation ALTER COLUMN constellation_id SET DEFAULT nextval('public.cluster_cluster_id_seq'::regclass);
 
 
 --
@@ -357,21 +357,35 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
--- Data for Name: cluster; Type: TABLE DATA; Schema: public; Owner: freecodecamp
---
-
-
-
---
 -- Data for Name: component; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
 
 
 --
+-- Data for Name: constellation; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+INSERT INTO public.constellation VALUES (1, 'Sagittarius', NULL);
+INSERT INTO public.constellation VALUES (2, 'Andromeda', NULL);
+INSERT INTO public.constellation VALUES (3, 'Perseus', NULL);
+INSERT INTO public.constellation VALUES (4, 'Pavo', NULL);
+INSERT INTO public.constellation VALUES (5, 'Sculptor', NULL);
+INSERT INTO public.constellation VALUES (6, 'Coma Berenices', NULL);
+INSERT INTO public.constellation VALUES (7, 'Viro', NULL);
+
+
+--
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.galaxy VALUES (1, 'Milky Way', 185, NULL, 1);
+INSERT INTO public.galaxy VALUES (2, 'Andromeda', 220, 2.45, 2);
+INSERT INTO public.galaxy VALUES (3, 'UGC 2885', 463, 232.00, 3);
+INSERT INTO public.galaxy VALUES (4, 'NGC 6872', 522, 212.00, 4);
+INSERT INTO public.galaxy VALUES (5, 'Comet', 600, 3200000.00, 5);
+INSERT INTO public.galaxy VALUES (6, 'NGC 4874', 1000, 3600000.00, 6);
+INSERT INTO public.galaxy VALUES (7, 'IC 1101', 210, 1000000.00, 7);
 
 
 --
@@ -403,7 +417,7 @@ SELECT pg_catalog.setval('public.atmosphere_atmosphere_id_seq', 1, false);
 -- Name: cluster_cluster_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.cluster_cluster_id_seq', 1, false);
+SELECT pg_catalog.setval('public.cluster_cluster_id_seq', 7, true);
 
 
 --
@@ -417,7 +431,7 @@ SELECT pg_catalog.setval('public.components_component_id_seq', 1, false);
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 1, false);
+SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 7, true);
 
 
 --
@@ -458,19 +472,19 @@ ALTER TABLE ONLY public.atmosphere
 
 
 --
--- Name: cluster cluster_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: constellation cluster_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.cluster
+ALTER TABLE ONLY public.constellation
     ADD CONSTRAINT cluster_name_key UNIQUE (name);
 
 
 --
--- Name: cluster cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: constellation cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.cluster
-    ADD CONSTRAINT cluster_pkey PRIMARY KEY (cluster_id);
+ALTER TABLE ONLY public.constellation
+    ADD CONSTRAINT cluster_pkey PRIMARY KEY (constellation_id);
 
 
 --
@@ -582,7 +596,7 @@ ALTER TABLE ONLY public.atmosphere
 --
 
 ALTER TABLE ONLY public.galaxy
-    ADD CONSTRAINT galaxy_cluster_id_fkey FOREIGN KEY (cluster_id) REFERENCES public.cluster(cluster_id);
+    ADD CONSTRAINT galaxy_cluster_id_fkey FOREIGN KEY (constellation_id) REFERENCES public.constellation(constellation_id);
 
 
 --
