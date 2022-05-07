@@ -81,6 +81,41 @@ ALTER SEQUENCE public.atmosphere_atmosphere_id_seq OWNED BY public.atmosphere.at
 
 
 --
+-- Name: cluster; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.cluster (
+    cluster_id integer NOT NULL,
+    name character varying NOT NULL,
+    comment text
+);
+
+
+ALTER TABLE public.cluster OWNER TO freecodecamp;
+
+--
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.cluster_cluster_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cluster_cluster_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.cluster_cluster_id_seq OWNED BY public.cluster.cluster_id;
+
+
+--
 -- Name: component; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
@@ -122,7 +157,9 @@ ALTER SEQUENCE public.components_component_id_seq OWNED BY public.component.comp
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
     name character varying NOT NULL,
-    radius_in_kly integer
+    radius_in_kly integer,
+    distance_in_kly integer,
+    cluster_id integer
 );
 
 
@@ -263,6 +300,13 @@ ALTER TABLE ONLY public.atmosphere ALTER COLUMN atmosphere_id SET DEFAULT nextva
 
 
 --
+-- Name: cluster cluster_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster ALTER COLUMN cluster_id SET DEFAULT nextval('public.cluster_cluster_id_seq'::regclass);
+
+
+--
 -- Name: component component_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
@@ -304,6 +348,12 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
+-- Data for Name: cluster; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+
+
+--
 -- Data for Name: component; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
@@ -338,6 +388,13 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 --
 
 SELECT pg_catalog.setval('public.atmosphere_atmosphere_id_seq', 1, false);
+
+
+--
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.cluster_cluster_id_seq', 1, false);
 
 
 --
@@ -389,6 +446,22 @@ ALTER TABLE ONLY public.atmosphere
 
 ALTER TABLE ONLY public.atmosphere
     ADD CONSTRAINT atmosphere_pkey PRIMARY KEY (atmosphere_id);
+
+
+--
+-- Name: cluster cluster_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster
+    ADD CONSTRAINT cluster_name_key UNIQUE (name);
+
+
+--
+-- Name: cluster cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster
+    ADD CONSTRAINT cluster_pkey PRIMARY KEY (cluster_id);
 
 
 --
@@ -493,6 +566,14 @@ ALTER TABLE ONLY public.atmosphere
 
 ALTER TABLE ONLY public.atmosphere
     ADD CONSTRAINT atmosphere_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
+
+
+--
+-- Name: galaxy galaxy_cluster_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_cluster_id_fkey FOREIGN KEY (cluster_id) REFERENCES public.cluster(cluster_id);
 
 
 --
