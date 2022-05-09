@@ -51,7 +51,7 @@ CREATE TABLE public.atmosphere (
     atmosphere_id integer NOT NULL,
     planet_id integer NOT NULL,
     component_id integer NOT NULL,
-    value numeric(2,1) NOT NULL,
+    value numeric(3,1) NOT NULL,
     name character varying
 );
 
@@ -234,10 +234,10 @@ CREATE TABLE public.planet (
     planet_id integer NOT NULL,
     name character varying NOT NULL,
     star_id integer NOT NULL,
-    weight_in_m numeric(4,1),
-    radius_in_r numeric(4,1),
+    weight_in_m numeric(12,4),
+    radius_in_r numeric(12,4),
     rings_is boolean NOT NULL,
-    magnetosphere_id boolean NOT NULL
+    magnetosphere_is boolean NOT NULL
 );
 
 
@@ -355,12 +355,37 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 -- Data for Name: atmosphere; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.atmosphere VALUES (1, 2, 1, 96.0, NULL);
+INSERT INTO public.atmosphere VALUES (2, 2, 3, 4.0, NULL);
+INSERT INTO public.atmosphere VALUES (3, 3, 2, 78.0, NULL);
+INSERT INTO public.atmosphere VALUES (4, 3, 5, 21.0, NULL);
+INSERT INTO public.atmosphere VALUES (5, 3, 6, 1.0, NULL);
+INSERT INTO public.atmosphere VALUES (6, 4, 1, 95.0, NULL);
+INSERT INTO public.atmosphere VALUES (7, 4, 3, 3.0, NULL);
+INSERT INTO public.atmosphere VALUES (8, 4, 6, 2.0, NULL);
+INSERT INTO public.atmosphere VALUES (9, 5, 8, 89.0, NULL);
+INSERT INTO public.atmosphere VALUES (10, 5, 9, 11.0, NULL);
+INSERT INTO public.atmosphere VALUES (11, 6, 8, 94.0, NULL);
+INSERT INTO public.atmosphere VALUES (12, 6, 9, 6.0, NULL);
+INSERT INTO public.atmosphere VALUES (13, 7, 8, 83.0, NULL);
+INSERT INTO public.atmosphere VALUES (14, 7, 9, 17.0, NULL);
+INSERT INTO public.atmosphere VALUES (15, 8, 8, 80.0, NULL);
+INSERT INTO public.atmosphere VALUES (16, 8, 9, 20.0, NULL);
 
 
 --
 -- Data for Name: component; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.component VALUES (1, 'Carbon dioxide', 'CO2');
+INSERT INTO public.component VALUES (2, 'Nitrogen', 'N');
+INSERT INTO public.component VALUES (3, 'Dinitrogen', 'N2');
+INSERT INTO public.component VALUES (4, 'Oxygen', 'O');
+INSERT INTO public.component VALUES (5, 'Dioxygen', 'O2');
+INSERT INTO public.component VALUES (6, 'Argon', 'Ar');
+INSERT INTO public.component VALUES (7, 'Hydrogen', 'H');
+INSERT INTO public.component VALUES (8, 'Dihydrogen', 'H2');
+INSERT INTO public.component VALUES (9, 'Helium', 'He');
 
 
 --
@@ -399,6 +424,18 @@ INSERT INTO public.galaxy VALUES (1, 'Milky Way', 185, NULL, 1, 400);
 -- Data for Name: planet; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.planet VALUES (1, 'Mercury', 7, 0.0550, 0.3829, false, true);
+INSERT INTO public.planet VALUES (2, 'Venus', 7, 0.8150, 0.9499, false, false);
+INSERT INTO public.planet VALUES (3, 'Earth', 7, 1.0000, 1.0000, false, true);
+INSERT INTO public.planet VALUES (4, 'Mars', 7, 0.1070, 0.5330, false, false);
+INSERT INTO public.planet VALUES (5, 'Jupiter', 7, 317.8000, 10.9730, true, true);
+INSERT INTO public.planet VALUES (6, 'Saturn', 7, 95.1590, 9.1402, true, true);
+INSERT INTO public.planet VALUES (7, 'Uranus', 7, 14.5360, 4.0070, true, true);
+INSERT INTO public.planet VALUES (8, 'Neptune', 7, 17.1470, 3.8830, true, true);
+INSERT INTO public.planet VALUES (10, 'Gliese 436 b', 2, 21.3600, 4.3270, false, false);
+INSERT INTO public.planet VALUES (9, 'Gliese 1214 b', 1, 8.1700, 2.7420, false, false);
+INSERT INTO public.planet VALUES (11, 'Gliese 504 b', 3, 317.8000, 0.9600, false, true);
+INSERT INTO public.planet VALUES (12, 'Kepler-10c', 4, 7.3700, 2.3500, false, true);
 
 
 --
@@ -418,7 +455,7 @@ INSERT INTO public.star VALUES (7, 'Sun', 1, 1.0, 1.0);
 -- Name: atmosphere_atmosphere_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.atmosphere_atmosphere_id_seq', 1, false);
+SELECT pg_catalog.setval('public.atmosphere_atmosphere_id_seq', 16, true);
 
 
 --
@@ -432,7 +469,7 @@ SELECT pg_catalog.setval('public.cluster_cluster_id_seq', 7, true);
 -- Name: components_component_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.components_component_id_seq', 1, false);
+SELECT pg_catalog.setval('public.components_component_id_seq', 9, true);
 
 
 --
@@ -453,7 +490,7 @@ SELECT pg_catalog.setval('public.moon_moon_id_seq', 1, false);
 -- Name: planet_palnet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.planet_palnet_id_seq', 1, false);
+SELECT pg_catalog.setval('public.planet_palnet_id_seq', 12, true);
 
 
 --
