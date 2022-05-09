@@ -196,9 +196,9 @@ CREATE TABLE public.moon (
     moon_id integer NOT NULL,
     name character varying NOT NULL,
     planet_id integer NOT NULL,
-    distance_to_planet numeric(4,1),
-    weight_in_m numeric(4,1),
-    radius_in_r numeric(4,1)
+    distance_to_planet numeric(12,4),
+    weight_in_m numeric(12,4),
+    radius_in_r numeric(12,4)
 );
 
 
@@ -418,6 +418,29 @@ INSERT INTO public.galaxy VALUES (1, 'Milky Way', 185, NULL, 1, 400);
 -- Data for Name: moon; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.moon VALUES (1, 'Moon', 3, 362600.0000, 1.0000, 1.0000);
+INSERT INTO public.moon VALUES (2, 'Phobos', 4, 9234.4200, 1.7690, 1.7840);
+INSERT INTO public.moon VALUES (3, 'Deimos', 4, 23455.5000, 0.2472, 0.9732);
+INSERT INTO public.moon VALUES (4, 'Io', 5, 420000.0000, 0.0150, 0.2860);
+INSERT INTO public.moon VALUES (5, 'Europa', 5, 664862.0000, 0.0080, 0.2450);
+INSERT INTO public.moon VALUES (6, 'Ganymede', 5, 1069200.0000, 0.0250, 0.4130);
+INSERT INTO public.moon VALUES (7, 'Callisto', 5, 1869000.0000, 0.0180, 0.3780);
+INSERT INTO public.moon VALUES (8, 'Mimas', 6, 181902.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (9, 'Enceladus', 6, 237948.0000, 0.0180, 0.0395);
+INSERT INTO public.moon VALUES (10, 'Tethys', 6, 294619.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (11, 'Dione', 6, 377396.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (12, 'Rhea', 6, 527108.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (13, 'Titan', 6, 1186680.0000, 0.0225, 0.4040);
+INSERT INTO public.moon VALUES (14, 'Iapetus', 6, 3560820.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (15, 'Miranda', 7, 129390.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (16, 'Ariel', 7, 191020.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (17, 'Umbriel', 7, 266000.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (18, 'Titania', 7, 435910.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (19, 'Oberon', 7, 583520.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (20, 'Nereid', 8, 5513940.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (21, 'Sao', 8, 22228000.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (22, 'Laomedeia', 8, 23613000.0000, NULL, NULL);
+INSERT INTO public.moon VALUES (23, 'Triton', 8, 354759.0000, 0.0036, 0.2122);
 
 
 --
@@ -483,7 +506,7 @@ SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 7, true);
 -- Name: moon_moon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.moon_moon_id_seq', 1, false);
+SELECT pg_catalog.setval('public.moon_moon_id_seq', 23, true);
 
 
 --
@@ -649,26 +672,3 @@ ALTER TABLE ONLY public.galaxy
 --
 
 ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_planet_id_fkey FOREIGN KEY (planet_id) REFERENCES public.planet(planet_id);
-
-
---
--- Name: planet planet_star_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_star_id_fkey FOREIGN KEY (star_id) REFERENCES public.star(star_id);
-
-
---
--- Name: star star_galaxy_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.star
-    ADD CONSTRAINT star_galaxy_id_fkey FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
-
-
---
--- PostgreSQL database dump complete
---
-
