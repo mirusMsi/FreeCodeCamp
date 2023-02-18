@@ -12,7 +12,22 @@ MAIN_MENU() {
   do
     echo "$SERVICE_ID) $SERVICE_NAME"
   done
+
+  echo -e "\n0) Exit"
+
+  echo -e "\nPlease enter the number of the service you want to sign up for:"
+  read SERVICE_ID_SELECTED
+
+  EXIT $SERVICE_ID_SELECTED
   
+}
+
+EXIT() {
+  if [[ $1 == 0 ]]
+  then
+    echo -e "\nThank you for visit."
+    exit
+  fi
 }
 
 
