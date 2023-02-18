@@ -44,6 +44,41 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: appointments; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.appointments (
+    appointment_id integer NOT NULL,
+    customer_id integer NOT NULL,
+    service_id integer NOT NULL
+);
+
+
+ALTER TABLE public.appointments OWNER TO freecodecamp;
+
+--
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.appointments_appointment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.appointments_appointment_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.appointments_appointment_id_seq OWNED BY public.appointments.appointment_id;
+
+
+--
 -- Name: customers; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
@@ -113,6 +148,13 @@ ALTER SEQUENCE public.services_service_id_seq OWNED BY public.services.service_i
 
 
 --
+-- Name: appointments appointment_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.appointments ALTER COLUMN appointment_id SET DEFAULT nextval('public.appointments_appointment_id_seq'::regclass);
+
+
+--
 -- Name: customers customer_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
@@ -124,6 +166,12 @@ ALTER TABLE ONLY public.customers ALTER COLUMN customer_id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.services ALTER COLUMN service_id SET DEFAULT nextval('public.services_service_id_seq'::regclass);
+
+
+--
+-- Data for Name: appointments; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
 
 
 --
@@ -139,6 +187,13 @@ ALTER TABLE ONLY public.services ALTER COLUMN service_id SET DEFAULT nextval('pu
 
 
 --
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 1, false);
+
+
+--
 -- Name: customers_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
@@ -150,6 +205,14 @@ SELECT pg_catalog.setval('public.customers_customer_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.services_service_id_seq', 1, false);
+
+
+--
+-- Name: appointments appointments_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.appointments
+    ADD CONSTRAINT appointments_pkey PRIMARY KEY (appointment_id);
 
 
 --
