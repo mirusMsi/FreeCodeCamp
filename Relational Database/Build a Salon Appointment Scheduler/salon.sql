@@ -50,7 +50,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.appointments (
     appointment_id integer NOT NULL,
     customer_id integer NOT NULL,
-    service_id integer NOT NULL
+    service_id integer NOT NULL,
+    "time" character varying NOT NULL
 );
 
 
